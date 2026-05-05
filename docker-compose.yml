@@ -8,9 +8,9 @@ services:
     environment:
       - FLASK_ENV=development
 
-  frontend:
-    build: ./front-agenda
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
+#  frontend:
+#    build: ./front-agenda
+#    ports:
+#      - "80:80"
+#    depends_on:
+#      - backend
