@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       // Redirige /api al backend Flask para evitar problemas de CORS en dev local
-      '/api': { target: 'http://localhost:5000', changeOrigin: true }
+      '/api': { target: 'http://localhost:5000', changeOrigin: true, rewrite: (path) => path.replace(/^\/api/, '') }
     }
   }
 })

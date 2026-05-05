@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend-agenda
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend-agenda:/backend
+    environment:
+      - FLASK_ENV=development
+
+  frontend:
+    build: ./frontend-agenda
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

@@ -1,30 +1,22 @@
-# Etapa 1: Build con Node
-FROM node:20-alpine AS builder
+# Etapa 1: Construcción
+FROM node:20-alpine AS build
+WORKDIR /frontend
 
-WORKDIR /app
-
-# Copiamos package.json y lock file primero (cache de capas)
-COPY package*.json ./
-
-# Desactivar verificación estricta de SSL temporalmente
+# Desactivar SSL estrictamente para evitar el error de certificado
 RUN npm config set strict-ssl false
 
-# Instalamos dependencias
+COPY package*.json ./
+
+# Instalamos TODAS las dependencias (incluyendo Vite)
 RUN npm install
 
-# Copiamos el resto del código del frontend
 COPY . .
 
-# Construimos la app de producción
+# Ahora Vite debería estar disponible en node_modules/.bin/vite
 RUN npm run build
 
-# Etapa 2: Servir con Nginx (imagen más liviana)
+# Etapa 2: Servidor
 FROM nginx:alpine
-
-# Copiamos el build al directorio de Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Exponemos el puerto 80
+COPY --from=build /frontend/dist /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
