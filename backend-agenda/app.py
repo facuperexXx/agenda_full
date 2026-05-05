@@ -3,8 +3,10 @@ from flask import Flask
 from config.dependencias import db, ma
 from routes.localidad_routes import localidad_bp
 from routes.contacto_routes import contacto_bp
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Generacion de base de datos
 base = os.path.abspath(os.path.dirname(__file__))
