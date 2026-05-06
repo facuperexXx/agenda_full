@@ -58,14 +58,14 @@ def buscar_localidad(id):
         data = localidades_schema.dump(localidad) 
         ok = True
         count = len(localidad)
-        message = ""
+        message = "Localidad obtenida"
 
         respuesta = respuesta_schema.make_respuesta(ok, data, message, count)
 
         return jsonify(respuesta_schema.dump(respuesta))
 
     except:
-        resp = Respuesta(False, [], message="Error de consulta", count=0)
+        resp = Respuesta(False, [], message="Error de consulta - Localidad controlador", count=0)
         return jsonify(respuesta_schema.dump(resp)), 404
 
 def eliminar_localidad(id):
@@ -84,11 +84,11 @@ def eliminar_localidad(id):
         return jsonify(respuesta_schema.dump(resp)), 404    
 
     except:
-        resp = Respuesta(False, [], message="No se elimino el registro", count=0)
+        resp = Respuesta(False, [], message="No se elimino el registro - localidad controller", count=0)
         return jsonify(respuesta_schema.dump(resp)), 404    
 
 def modificar_localidad(id):
-    #try:
+    try:
         existe = verificar_existencia_service(id)
         
         # Filtro de existencia 
@@ -109,8 +109,7 @@ def modificar_localidad(id):
             respuesta = respuesta_schema.make_respuesta(ok, data, message, count)
             return jsonify(respuesta_schema.dump(respuesta))
 
+    except:
         # Registro no encontrado 
         resp = Respuesta(False, [], message="Registro no existe", count=0)
         return jsonify(respuesta_schema.dump(resp)), 404    
-        return "ok"
-

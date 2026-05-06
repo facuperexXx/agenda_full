@@ -36,7 +36,7 @@ def buscar_por_id_service(id:int):
 
 def eliminar_localidad_service(id:int):
     # Se obtiene el registro indicado con id
-    registro = buscar_por_id(id)
+    registro = buscar_por_id_service(id)
 
     # Elimacion de la localidad
     db.session.delete(registro)
@@ -50,6 +50,3 @@ def modificar_localidad_service(datos:dict, id:int):
             setattr(localidad, key, valor)
 
     db.session.commit()
-    print("Cambios guardados")
-    
-
